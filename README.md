@@ -17,13 +17,13 @@ I feel someone like me might be also interested in informative dwm status bar, s
     - date
     - time
 
-    if your need one or some of the above information be displayed in your status bar, please add entries into the json file.
+if your need one or some of the above information be displayed in your status bar, please add entries into the json file.
 
 # how to build
-    ## requirement:
+    ### requirement:
     - go compiler
     - dwm windows manager
     - awesome font
 
-    ## build:
+    ### build:
     (sudo) make dwmStatus install
