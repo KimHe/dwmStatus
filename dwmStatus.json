@@ -1,0 +1,26 @@
+{
+    "sound_device": "0",
+    "network_interface": "wlp3s0",
+
+    "icons": [
+        {"name": "calendar",    "icon": "\uf073"},
+        {"name": "clock",       "icon": "\uf017"},
+        {"name": "rx",          "icon": "\uf0ed"},
+        {"name": "tx",          "icon": "\uf0ee"},
+        {"name": "brightness",  "icon": "\uf042"},
+        {"name": "volume_mute", "icon": "\uf026"},
+        {"name": "volume_low",  "icon": "\uf027"},
+        {"name": "volume_loud", "icon": "\uf028"},
+        {"name": "temp100",     "icon": "\uf2c7"},
+        {"name": "temp50",      "icon": "\uf2c9"},
+        {"name": "temp25",      "icon": "\uf2ca"},
+        {"name": "temp0",       "icon": "\uf2cb"},
+        {"name": "battery100",  "icon": "\uf240"},
+        {"name": "battery75",   "icon": "\uf241"},
+        {"name": "battery50",   "icon": "\uf242"},
+        {"name": "battery25",   "icon": "\uf243"},
+        {"name": "battery0",    "icon": "\uf244"},
+        {"name": "cpu",         "icon": "\uf2db"},
+        {"name": "ram",         "icon": "\uf2dc"}
+    ]
+}
