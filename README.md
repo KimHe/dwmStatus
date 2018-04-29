@@ -19,11 +19,23 @@ I feel someone like me might be also interested in informative dwm status bar, s
 
 if your need one or some of the above information be displayed in your status bar, please add entries into the json file.
 
-# how to build
-    ### requirement:
-    - go compiler
-    - dwm windows manager
-    - awesome font
+# How to build
+    requirements:
 
-    ### build:
+    * go compiler
+    * dwm windows manager
+    * awesome font
+
+    build:
     (sudo) make dwmStatus install
+
+# Others
+The network interface differs in your case, you need change wlp3s0.
+If you do not have idea, please use "ifconfig" to check.
+
+The program should be run like
+    dwmStatus dwmStatus.json
+by passing json file as parameters
+
+Lastly, you should put the above command where you start dwm. 
+
