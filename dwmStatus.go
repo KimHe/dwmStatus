@@ -40,8 +40,8 @@ var (
 	cores          = runtime.NumCPU()
 	rx_old         = 0
 	tx_old         = 0
-    keys           = []string{"rx", "tx", "brightness", "temp", "battery", "cpu", "ram", "calendar", "clock"}
-	colors             = []DwmColor{{"\x06", "\x07"}, {"\x08", "\x09"}, {"\x0a", "\x0b"}, {"\x0c", "\x0d"}, {"\x0e", "\x0f"}, {"\x10", "\x11"}}
+    keys           = []string{"rx", "tx", "brightness", "volume", "temp", "battery", "cpu", "ram", "calendar", "clock"}
+	colors         = []DwmColor{{"\x06", "\x07"}, {"\x08", "\x09"}, {"\x0a", "\x0b"}, {"\x0c", "\x0d"}, {"\x0e", "\x0f"}, {"\x10", "\x11"}}
 //	colors             = []DwmColor{{"\x0a", "\x0b"}, {"\x0b", "\x0a"}}
 	valid_net_device   = false
 	valid_sound_device = false
@@ -117,7 +117,7 @@ func collect_date(key string) {
 
 func collect_time(key string) {
 	t := time.Now()
-	collected_data[key] = fmt.Sprintf("%s %s ", icons[key], t.Format("15:04"))
+	collected_data[key] = fmt.Sprintf("%s %s", icons[key], t.Format("15:04"))
 }
 
 func adjust_width(s string, width int) string {
@@ -134,22 +134,22 @@ func adjust_width(s string, width int) string {
 func format_bytes(b int) string {
 	kb := float32(b) / 1000.0
 	if kb < 1 {
-		return adjust_width(fmt.Sprintf("%4dB", b), 6)
+		return adjust_width(fmt.Sprintf("%3dB", b), 4)
 	}
 	mb := kb / 1000.0
 	if mb < 1 {
-		return adjust_width(fmt.Sprintf("%4.1fK", kb), 6)
+		return adjust_width(fmt.Sprintf("%3.1fK", kb), 4)
 	}
 	gb := mb / 1000.0
 	if gb < 1 {
-		return adjust_width(fmt.Sprintf("%4.1fM", mb), 6)
+		return adjust_width(fmt.Sprintf("%3.1fM", mb), 4)
 	}
 	tb := gb / 1000.0
 	if tb < 1 {
-		return adjust_width(fmt.Sprintf("%4.1fG", gb), 6)
+		return adjust_width(fmt.Sprintf("%3.1fG", gb), 4)
 	}
 
-	return adjust_width(fmt.Sprintf("%4.1fT", tb), 6)
+	return adjust_width(fmt.Sprintf("%3.1fT", tb), 4)
 }
 
 func collect_network(rxkey, txkey string) {
@@ -187,13 +187,19 @@ func collect_network(rxkey, txkey string) {
 }
 
 func collect_brightness(key string) {
-	actual, err := ioutil.ReadFile("/sys/class/backlight/acpi_video0/actual_brightness")
+    // For IBM T60
+	//actual, err := ioutil.ReadFile("/sys/class/backlight/acpi_video0/actual_brightness")
+    // For Thinkpad X220
+	actual, err := ioutil.ReadFile("/sys/class/backlight/intel_backlight/actual_brightness")
 	if err != nil {
 		remove_key(key)
 		return
 	}
 
-	max, err := ioutil.ReadFile("/sys/class/backlight/acpi_video0/max_brightness")
+    // For IBM T60
+	//max, err := ioutil.ReadFile("/sys/class/backlight/acpi_video0/max_brightness")
+    // For Thinkpad X220
+	max, err := ioutil.ReadFile("/sys/class/backlight/intel_backlight/max_brightness")
 	if err != nil {
 		remove_key(key)
 		return
@@ -212,7 +218,7 @@ func collect_brightness(key string) {
 	}
 
 	cur := 100 * actual_br / max_br
-	collected_data[key] = fmt.Sprintf("%s %3d%% ", icons[key], cur)
+	collected_data[key] = fmt.Sprintf("%s%3d%%", icons[key], cur)
 }
 
 func collect_temperature(key string) {
@@ -254,7 +260,7 @@ func collect_temperature(key string) {
 		icon = icons["temp0"]
     }
 
-	collected_data[key] = fmt.Sprintf("%s %2dC ", icon, temp)
+	collected_data[key] = fmt.Sprintf("%s%3dC", icon, temp)
 }
 
 func collect_power(key string) {
@@ -289,7 +295,7 @@ func collect_power(key string) {
 		icon = icons["battery0"]
 	}
 
-	collected_data[key] = fmt.Sprintf("%s %s ", icon, charge)
+	collected_data[key] = fmt.Sprintf("%s %s", icon, charge)
 }
 
 func collect_ram(key string) {
@@ -328,7 +334,7 @@ func collect_ram(key string) {
 	}
 
 	ram := used * 100 / total
-	collected_data[key] = fmt.Sprintf("%s%3d%% ", icons[key], ram)
+	collected_data[key] = fmt.Sprintf("%s%2d%%", icons[key], ram)
 }
 
 func collect_cpu(key string) {
@@ -347,7 +353,7 @@ func collect_cpu(key string) {
 	}
 
 	cpu := int(load * 100.0 / float32(cores))
-	collected_data[key] = fmt.Sprintf("%s%3d%% ", icons[key], cpu)
+	collected_data[key] = fmt.Sprintf("%s%3d%%", icons[key], cpu)
 }
 
 func collect_volume(key string) {
@@ -402,9 +408,9 @@ func collect_volume(key string) {
 	}
 
 	var icon string
-	muted_char := " "
+	//muted_char := " "
 	if muted[device_id] {
-		muted_char = "M"
+		//muted_char = "M"
 		icon = icons["volume_mute"]
 	} else {
 		if volume > 40 {
@@ -414,13 +420,14 @@ func collect_volume(key string) {
 		}
 	}
 
-	collected_data[key] = fmt.Sprintf("%s %s %s", icon, volumes[device_id], muted_char)
+	//collected_data[key] = fmt.Sprintf("%s %s %s", icon, volumes[device_id], muted_char)
+	collected_data[key] = fmt.Sprintf("%s %s", icon, volumes[device_id])
 }
 
 func collect_stats() {
 	collect_network("rx", "tx")
 	collect_power("battery")
-//  collect_volume("volume")
+    collect_volume("volume")
     collect_brightness("brightness")
     collect_temperature("temp")
 	collect_cpu("cpu")

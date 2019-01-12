@@ -5,10 +5,10 @@
     "icons": [
         {"name": "calendar",    "icon": "\uf073"},
         {"name": "clock",       "icon": "\uf017"},
-        {"name": "rx",          "icon": "\uf0ed"},
-        {"name": "tx",          "icon": "\uf0ee"},
+        {"name": "rx",          "icon": "\uf381"},
+        {"name": "tx",          "icon": "\uf382"},
         {"name": "brightness",  "icon": "\uf042"},
-        {"name": "volume_mute", "icon": "\uf026"},
+        {"name": "volume_mute", "icon": "\uf6a9"},
         {"name": "volume_low",  "icon": "\uf027"},
         {"name": "volume_loud", "icon": "\uf028"},
         {"name": "temp100",     "icon": "\uf2c7"},
@@ -21,6 +21,6 @@
         {"name": "battery25",   "icon": "\uf243"},
         {"name": "battery0",    "icon": "\uf244"},
         {"name": "cpu",         "icon": "\uf2db"},
-        {"name": "ram",         "icon": "\uf2dc"}
+        {"name": "ram",         "icon": "\uf538"}
     ]
 }
